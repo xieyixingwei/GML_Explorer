@@ -1,0 +1,154 @@
+<tab, name = RTOS>
+    <tabpage, name = info, align = vertical>
+        <label, text = xxxx, fmt = %s, id = #1, forecolor = 1023, />
+        <label, text = Safe image: ..., fmt = %s, id = #2, />
+        <label, text = 'Normal image: ...', fmt = %s, id = #3, />
+
+        <group_box, title = Event log:, backcolor = 123>
+            <text_edit, id = #4, text = hello world, fmt = %s, dir = r, access = false,/>
+        </group_box>
+    </tabpage>
+
+    <tabpage, name = flash, align = vertical>
+        <group_box, title = Target device, align = horizontal>
+            <label, text = Target device(Everything on this tab operate on this device):, /> 
+            <combo_box, id = #5, value=[local/Backplane; TRXM 0; TRXM 1], stretch = 1, access = false, />
+        </group_box>
+
+        <group_box, title = Erase and program flash>
+            <group_box, title = (1) select flash area, align = horizontal>
+                <label, text = area to erase/program:, access = false, />
+                <combo_box, id = #6, value = [FPGA image 1(normal); Radio App 1(normal)], stretch = 1, />
+            </group_box>
+
+            <group_box, title = (2) erase>
+                <button, id = #7, text = Unlock+Erase area (needed before loading new data), protocol = [#1005%u8;#1006%u8], access = false,/>
+            </group_box>
+
+            <group_box, title = (3) program>
+                <label, text = file, id = #8, protocol = [#1005%u8;#1006%u8],/>
+            </group_box>
+
+            <group_box, title = erase/program status>
+                <progress_bar, id = #9, value = [0; 100; 500],/>
+            </group_box>
+        </group_box>
+
+        <group_box, title = Flash parameters>
+            <button, text = delete flash parameter..., id = #10, protocol = [%null], foreb = 123,/>
+        </group_box>
+
+        <group_box, title = Reboot, align = horizontal>
+            <button, text = reboot from primary boot table(safe), id = #11, protocol = [%null],/>
+            <button, text = reboot from secondary boot table(normal), id = #12, protocol = [%null],/>
+        </group_box>
+    </tabpage>
+
+    <tab, name = debug, align = vertical>
+        <tab, name = Soft SPI, align = vertical>
+            <container, align = horizontal>
+                <label, text = Soft SPI device, stretch = 0,/>
+                <combo_box, id = #13, value = [AFE7689; LTU1; LTU2],stretch = 1, stretch = 1,/>
+            </container>
+            
+            <container, align = horizontal>
+                <label, text = Address(chip_num), />
+                <line_edit, dir = wr, id = #14, fmt = %u32,/>
+            </container>
+            
+            <container, align = horizontal>
+                <label, text = Data, />
+                <line_edit, dir=wr, id = #15, fmt = %u32,/>
+            </container>
+            
+            <container, align = horizontal>
+                <button, text = Write, id = #16, protocol = [#13%u8; #4%u32; #15%u32],/>
+            </container>
+            
+            <container, align = horizontal>
+                <button, text = Read, id = #17, protocol = [#15%u8; #14%u32],/>
+            </container>
+        </tab>
+        
+        <tab, name = HW Setup, align = vertical>
+            <container, align = horizontal>
+                <button, text = D,/>
+
+                    <container, align = vertical>
+                        <button, text = A,/>
+                        <button, text = B,/>
+                        <button, text = C,/>
+                    </container>
+                    <container, align = vertical>
+                        <button, text = E,/>
+                        <button, text = F,/>
+                        <button, text = G,/>
+                    </container>
+
+            </container>
+        </tab>
+        <tab, name = Ltu Config, align = vertical,/>
+    </tab>
+    
+    <tab, name = memory access, align = vertical>
+        <group_box, title = Memory read>
+            <container, align = horizontal>
+                <label, text = Bus address, />
+                <line_edit, dir=w, id=#1018, fmt = %u32,/>
+            </container>
+            
+            <container, align = horizontal>
+                <label, text = Length(32b words),/>
+                <line_edit, dir=w, id=#1019, fmt = %u32/>
+            </container>
+            
+            <container, align = horizontal>
+                <label, text = data(32b words),/>
+                <line_edit, dir=r, id=#1020, fmt = %u32/>
+            </container>
+            
+            <button, text = Read!, protocol = [#1013%u8; #1014%u32],/>
+        </group_box>
+        
+        <group_box, title = Memory write>
+            <container, align = horizontal>
+                <label, text = Bus address,/> <line_edit, dir=w,/>
+            </container>
+            
+            <container, align = horizontal>
+                <label, text = data(32b words),/> <line_edit, dir=r,/>
+            </container>
+            
+            <button, text = Write!,/>
+        </group_box>
+    </tab>
+    
+    <tab, name = command, align = vertical>
+        <group_box, title = Command log:>
+            <text_edit, id=#002, dir = r> </text_edit>
+        </group_box>
+        
+        <container, align = horizontal>
+            <label, text = Enter commands:,/> <line_edit, dir = wr,/>
+        </container>
+        
+    </tab>
+    
+    <tab, name = network, align = vertical>
+        <label, text = The SW1 DIP switch is OFF, the configuration below is valid.> </label>
+        
+        <container, align = horizontal>
+            <label, text = MAC address,/> <line_edit, value = 0x32.0x35.0x35.0x2e,/>
+        </container>
+        
+        <container, align = horizontal>
+            <label, text = Use DHCP:,/> <check_box, id=#1, value = true, stretch = 1,/> <radio_button, id=#19, value = 1, stretch = 1,/>
+        </container>
+    </tab>
+    
+    <tab, name = health, align = vertical>
+        <group_box, title = TRX power>
+            <text_edit, line=3, id=#1222, color=[123;124;125], protocol = [%null]> </graph>
+        </group_box>
+    </tab>
+</tab>
