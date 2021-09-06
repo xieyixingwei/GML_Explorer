@@ -1,1 +1,1 @@
-# GML_Explorer
+Qt app for GML browser
